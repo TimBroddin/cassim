@@ -22,6 +22,6 @@ If everything is configured properly, you should be able to run `cassim add 3000
 
 # Todo
 
-[] Implement `cassim remove`
-[] Password protection
-[] Better error handling
+- [ ] Implement `cassim remove`
+- [ ] Password protection
+- [ ] Better error handling
