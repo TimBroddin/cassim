@@ -6,6 +6,8 @@ const setup = require("./lib/setup");
 const argv = require("minimist")(process.argv.slice(2));
 const Configstore = require("configstore");
 const packageJson = require("./package.json");
+const CLI = require("clui");
+
 const {
   printBanner,
   printUsage,
@@ -14,6 +16,8 @@ const {
   enableSsl,
 } = require("./lib/helpers");
 const config = new Configstore(packageJson.name);
+
+const Spinner = CLI.Spinner;
 
 const go = async () => {
   clear();
@@ -37,17 +41,25 @@ const go = async () => {
       printUsage();
       process.exit();
     }
+    const status = new Spinner("Creating template");
+    status.start();
     await makeTemplate(port, config.all);
+    status.message("Restarting nginx");
     await restartNginx();
 
     if (config.all.enable_ssl) {
+      status.message("Enabling SSL");
       await enableSsl(port, config.all);
+      status.message("Restarting nginx");
       await restartNginx();
+      status.stop();
 
       console.log(
         `All done, you should now be able to surf to:  https://${port}.${config.all.base_domain}`
       );
     } else {
+      status.stop();
+
       console.log(
         `All done, you should now be able to surf to:  http://${port}.${config.all.base_domain}`
       );
