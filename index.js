@@ -35,7 +35,7 @@ const go = async () => {
     await makeTemplate(port, config.all);
     await restartNginx();
 
-    if (config.enable_ssl) {
+    if (config.all.enable_ssl) {
       await enableSsl(port, config.all);
       await restartNginx();
 
