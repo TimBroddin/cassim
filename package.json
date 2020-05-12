@@ -1,7 +1,7 @@
 {
   "name": "cassim",
-  "version": "0.1.1",
-  "description": "",
+  "version": "0.1.2",
+  "description": "Cassim is an easy CLI tool to create nginx vhosts pointing to a certain port. ",
   "main": "index.js",
   "bin": {
     "cassim": "./index.js"

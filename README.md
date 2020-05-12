@@ -1,6 +1,6 @@
 # Cassim
 
-Cassim is an easy way to create nginx vhosts pointing to a ceratin port.
+Cassim is an easy CLI tool to create nginx vhosts pointing to a certain port.
 
 I created this package to quickly open up ports while developing on a remote server on the go. For example, when I'm working on a `create-react-app` project, I can quickly debug it by typing `cassim add 3000` which will create a subdomain at `3000.mydomain.com`.
 
