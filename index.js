@@ -12,7 +12,8 @@ const {
   printBanner,
   printUsage,
   makeTemplate,
-  restartNginx,
+  removeTemplate,
+  reloadNginx,
   enableSsl,
 } = require("./lib/helpers");
 const config = new Configstore(packageJson.name);
@@ -34,7 +35,7 @@ const go = async () => {
     console.log("\n");
     console.log("Please re-rerun Cassim to start using it.", "\n");
     printUsage();
-  } else if (argv._[0] === "add") {
+  } else if ((argv._ && argv._[0] === "add")) {
     const port = parseInt(argv._[1]);
     if (isNaN(port)) {
       console.log("Error: please provide a valid port number.", "\n");
@@ -44,14 +45,14 @@ const go = async () => {
     const status = new Spinner("Creating template");
     status.start();
     await makeTemplate(port, config.all);
-    status.message("Restarting nginx");
-    await restartNginx();
+    status.message("Reloading nginx");
+    await reloadNginx();
 
     if (config.all.enable_ssl) {
       status.message("Enabling SSL");
       await enableSsl(port, config.all);
-      status.message("Restarting nginx");
-      await restartNginx();
+      status.message("Reloading nginx");
+      await reloadNginx();
       status.stop();
 
       console.log(
@@ -64,6 +65,21 @@ const go = async () => {
         `All done, you should now be able to surf to:  http://${port}.${config.all.base_domain}`
       );
     }
+  } else if((argv._ && argv._[0] === "remove")) {
+    const port = parseInt(argv._[1]);
+    if (isNaN(port)) {
+      console.log("Error: please provide a valid port number.", "\n");
+      printUsage();
+      process.exit();
+    }
+
+    const status = new Spinner("Removing vhost");
+    status.start();    
+    await removeTemplate(port, config.all);
+    status.message("Reloading nginx");
+    await reloadNginx();
+    status.stop();
+    console.log(`All done!`);
   } else {
     await printUsage();
   }

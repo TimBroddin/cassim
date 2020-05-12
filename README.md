@@ -26,6 +26,6 @@ Cassim uses `sudo` to execute commands. Be sure to add your user to the sudoers 
 
 # Todo
 
-- [ ] Implement `cassim remove`
+- [X] Implement `cassim remove`
 - [ ] Password protection
 - [ ] Better error handling
