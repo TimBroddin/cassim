@@ -20,6 +20,10 @@ The first time you run cassim you'll be asked some questions about where your ng
 
 If everything is configured properly, you should be able to run `cassim add 3000` and a vhost will be created. If you've enabled SSL and installed `certbot` will be invoked, configuring SSL.
 
+# Sudo
+
+Cassim uses `sudo` to execute commands. Be sure to add your user to the sudoers file.
+
 # Todo
 
 - [ ] Implement `cassim remove`
