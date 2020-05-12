@@ -4,6 +4,7 @@ const {
   printUsage,
   makeTemplate,
   restartNginx,
+  enableSsl,
 } = require("./lib/helpers");
 const setup = require("./lib/setup");
 const argv = require("minimist")(process.argv.slice(2));
